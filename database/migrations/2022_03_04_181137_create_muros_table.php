@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFollowsTable extends Migration
+class CreateMurosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateFollowsTable extends Migration
      */
     public function up()
     {
-        Schema::create('follows', function (Blueprint $table) {
+        Schema::create('muros', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->bigInteger('seguido_id')->unsigned()->nullable();
-            $table->foreign('seguido_id')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('seguidor_id')->unsigned()->nullable();
-            $table->foreign('seguidor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('texto')->default('');
             $table->timestamps();
         });
     }

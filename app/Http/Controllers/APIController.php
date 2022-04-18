@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Interfaces\CongresoRepositoryInterface;
+use App\Jobs\ImportarDiputadosJob;
 
 class APIController extends Controller
 {
+    public function inicializar ()
+    {
+        InicializarJob::dispatch();
+        return response()->json(['message' => 'Proceso de inicializado lanzado correctamente'], 200);
+    }
 
-    public function getAllDiputados()//: JsonResponse
+
+/*    public function getAllDiputados()//: JsonResponse
     {
         $data = $this->congresoRepository->getAllDiputados();
         if ($data != null)
@@ -116,5 +122,5 @@ class APIController extends Controller
             return response()->json(['data' => $data ]);
         else
             return response()->json(['message' => 'Not Found!'], 404);
-    }
+    }*/
 }

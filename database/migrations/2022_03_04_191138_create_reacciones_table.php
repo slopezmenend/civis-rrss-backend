@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReaccionTable extends Migration
+class CreateReaccionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,12 @@ class CreateReaccionTable extends Migration
     {
         Schema::create('reacciones', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('comentario_id')->unsigned();
+            $table->integer('comentario_id')->unsigned()->nullable();
             $table->foreign('comentario_id')->references('id')->on('comentarios')->onDelete('cascade');
-            $table->integer('icon_id')->unsigned();
-            $table->foreign('icon_id')->references('id')->on('icon')->onDelete('cascade');
+            $table->integer('icon_id')->unsigned()->nullable();
+            $table->foreign('icon_id')->references('id')->on('icons')->onDelete('cascade');
             $table->timestamps();
         });
     }
