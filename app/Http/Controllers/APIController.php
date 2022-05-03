@@ -2,125 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comentario;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
-use App\Jobs\ImportarDiputadosJob;
+//use App\Jobs\ImportarDiputadosJob;
 
 class APIController extends Controller
 {
-    public function inicializar ()
+    /*public function inicializar ()
     {
         InicializarJob::dispatch();
         return response()->json(['message' => 'Proceso de inicializado lanzado correctamente'], 200);
-    }
-
-
-/*    public function getAllDiputados()//: JsonResponse
-    {
-        $data = $this->congresoRepository->getAllDiputados();
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getDiputadoById($id)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getDiputadoById($id);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getDiputadoByName($nombre)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getDiputadoByName($nombre);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getAllVotacionesSummary()//: JsonResponse
-    {
-        $data = $this->congresoRepository->getAllVotacionesSummary();
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getVotacionesSummaryByDate($date)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getVotacionesSummaryByDate($date);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getVotacionDetail($id)
-    //: JsonResponse
-    {
-        $data = $this->congresoRepository->getVotacionDetail($id);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getVotacionDetailVotos($id)
-    //: JsonResponse
-    {
-        $data = $this->congresoRepository->getVotacionDetailVotos($id);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getVotacionesSumaryByDiputadoId ($id)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getVotacionesSumaryByDiputadoId ($id);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getAllIntervenciones()//: JsonResponse
-    {
-        $data = $this->congresoRepository->getAllIntervenciones();
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getIntervencionesByDate($date)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getIntervencionesByDate($date);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getIntervencion($id)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getIntervencion($id);
-        if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-    }
-
-    public function getIntervencionByDiputadoId ($id)//: JsonResponse
-    {
-        $data = $this->congresoRepository->getIntervencionByDiputadoId($id);
-            if ($data != null)
-            return response()->json(['data' => $data ]);
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
     }*/
+
+    public function getMuro($id)
+    {
+        //
+        $comentario = Comentario::where('user_id', '=', $id)->orderBy('id', 'desc')->paginate(15);
+        if ($comentario != null)
+            return response()->json(['data' => $comentario]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
+    }
+
+    public function getTimeline($id)
+    {
+        //
+        $comentario = DB::table('comentarios')
+        ->join('follows', 'comentarios.user_id', '=', 'follows.seguido_id')->where ('follows.seguidor_id', '=', $id)
+        ->paginate(15);
+        if ($comentario != null)
+            return response()->json(['data' => $comentario]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
+    }
+
+    public function getUserByEmail ($mail)
+    {
+        //dump($mail);
+        $user = User::where('email', '=', $mail)->first();
+        //dd($user);
+        //dump ($user);
+
+        if ($user != null)
+            return response()->json(['data' => $user ]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
+    }
+
+    public function searchUser ($pattern)
+    {
+        //dump($mail);
+        $user = User::where('nombre', 'LIKE', '%' . $pattern . '%')->
+        orWhere('email', 'LIKE', '%' . $pattern . '%')->
+        orWhere('circunscripcion', 'LIKE', '%' . $pattern . '%')->
+        orWhere('partido', 'LIKE', '%' . $pattern . '%')->
+        orWhere('biografia', 'LIKE', '%' . $pattern . '%')
+        ->paginate(15);
+        //dd($user);
+        //dump ($user);
+
+        if ($user != null)
+            return response()->json(['data' => $user ]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
+    }
 }

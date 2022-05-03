@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Comentario;
 use Illuminate\Http\Request;
 
 class FollowController extends Controller
@@ -35,6 +35,13 @@ class FollowController extends Controller
     public function store(Request $request)
     {
         //
+        $follow = Follow::create ($request->all);
+
+        //$follow = $request;
+        if ($follow != null)
+            return response()->json(['data' => $follow]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
     }
 
     /**
@@ -80,5 +87,8 @@ class FollowController extends Controller
     public function destroy($id)
     {
         //
+        $follow = Follow::find($id);
+        if ($follow != null)
+            $follow->delete();
     }
 }

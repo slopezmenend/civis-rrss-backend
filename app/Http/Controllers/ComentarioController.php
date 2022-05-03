@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Comentario;
 
 class ComentarioController extends Controller
 {
@@ -14,6 +15,11 @@ class ComentarioController extends Controller
     public function index()
     {
         //
+        $comentario = Comentario::orderBy('id')->paginate(15);
+        if ($comentario != null)
+            return response()->json(['data' => $comentario]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
     }
 
     /**
@@ -35,6 +41,23 @@ class ComentarioController extends Controller
     public function store(Request $request)
     {
         //
+        //dump ($request);
+
+        //$comentario = new Comentario ();
+        //$comentario->save();
+        //if ($request->all != null)
+        //{
+        //    $comentario->update($request->all);
+            //$comentario->save();
+        //}*/
+        $comentario = Comentario::create ($request->all);
+
+        //$comentario = $request;
+        if ($comentario != null)
+
+            return response()->json(['data' => $comentario]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
     }
 
     /**
@@ -46,6 +69,14 @@ class ComentarioController extends Controller
     public function show($id)
     {
         //
+        //dump ($id);
+        $comentario = Comentario::find($id);
+        //dump ($comentario);
+
+        if ($comentario != null)
+            return response()->json(['data' => $comentario ]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
     }
 
     /**
@@ -80,5 +111,8 @@ class ComentarioController extends Controller
     public function destroy($id)
     {
         //
+        $comentario = Comentario::find($id);
+        if ($comentario != null)
+            $comentario->delete();
     }
 }
