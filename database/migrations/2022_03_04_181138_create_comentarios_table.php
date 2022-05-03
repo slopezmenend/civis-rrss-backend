@@ -19,12 +19,18 @@ class CreateComentariosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('comentarios')->onDelete('cascade');
-            $table->integer('muro_id')->unsigned()->nullable();
-            $table->foreign('muro_id')->references('id')->on('muros')->onDelete('cascade');
-            $table->string('texto')->default('');
-            $table->string('urlfoto')->default('');
-            $table->string('urlvideo')->default('');
-            $table->string('urlfichero')->default('');
+            $table->string('titulo')->default('');
+            $table->string('text')->default('');
+            $table->string('image')->default('');
+            $table->string('alt')->default('');
+            $table->string('video')->default('');
+            $table->string('subs')->default('');
+            $table->bigInteger('encanta')->default(0);
+            $table->bigInteger('gusta')->default(0);
+            $table->bigInteger('igual')->default(0);
+            $table->bigInteger('disgusta')->default(0);
+            $table->bigInteger('odia')->default(0);
+            $table->bigInteger('ncomentarios')->default(0);
             $table->timestamps();
         });
     }
@@ -39,3 +45,4 @@ class CreateComentariosTable extends Migration
         Schema::dropIfExists('follows');
     }
 }
+

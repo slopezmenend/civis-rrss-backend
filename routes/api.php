@@ -3,6 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\IconController;
+use App\Http\Controllers\ReaccionController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,30 +20,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
-
+});*/
 
 /** Resources */
 Route::resource('comentario', ComentarioController::class);
 Route::resource('follow', FollowController::class);
 Route::resource('icon', IconController::class);
-Route::resource('muro', MuroController::class);
 Route::resource('reaccion', ReaccionController::class);
 Route::resource('user', UserController::class);
-
-/*Route::get ('/diputado/{id}', 'APIController@getDiputadoById');
-
-/** Votaciones
-Route::get ('/votaciones', 'APIController@getAllVotacionesSummary');
-Route::get ('/votaciones/date/{date}', 'APIController@getVotacionesSummaryByDate');
-Route::get ('/votaciones/diputado/{id}', 'APIController@getVotacionesSumaryByDiputadoId');
-Route::get ('/votacion/{id}', 'APIController@getVotacionDetail');
-Route::get ('/votacion/votos/{id}', 'APIController@getVotacionDetailVotos');
-
-/** Intervenciones
-Route::get ('/intervenciones', 'APIController@getAllIntervenciones');
-Route::get ('/intervenciones/date/{date}', 'APIController@getIntervencionesByDate');
-Route::get ('/intervenciones/diputado/{id}', 'APIController@getIntervencionByDiputadoId');
-Route::get ('/intervencion/{id}', 'APIController@getIntervencion');
