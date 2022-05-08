@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Follow;
 
 class InicializarJob implements ShouldQueue
 {
@@ -103,9 +104,8 @@ class InicializarJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->init_icons();
-        $this->crear_diputados();
-
+        /*$this->init_icons();
+        $this->crear_diputados();*/
     }
 
     /**

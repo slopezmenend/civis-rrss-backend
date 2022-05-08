@@ -28,6 +28,18 @@ use App\Http\Controllers\UserController;
 /** Resources */
 Route::resource('comentario', ComentarioController::class);
 Route::resource('follow', FollowController::class);
+//search usuario
+Route::post ('/postfollow/{seguido_id}/{seguidor_id}', function ($seguido_id, $seguidor_id)
+{
+    return FollowController::createFollow($seguido_id, $seguidor_id);
+});
+
+//search usuario
+Route::delete ('/deletefollow/{seguido_id}/{seguidor_id}', function ($seguido_id, $seguidor_id)
+{
+    return FollowController::deleteFollow($seguido_id, $seguidor_id);
+});
+
 Route::resource('icon', IconController::class);
 Route::resource('reaccion', ReaccionController::class);
 Route::resource('user', UserController::class);
@@ -55,4 +67,6 @@ Route::get ('/searchuser/{pattern}', function ($pattern)
 {
     return APIController::searchUser($pattern);
 });
+
+
 

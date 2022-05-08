@@ -56,6 +56,7 @@ class APIController extends Controller
     {
         //dump($mail);
         $user = User::where('nombre', 'LIKE', '%' . $pattern . '%')->
+        orWhere('name', 'LIKE', '%' . $pattern . '%')->
         orWhere('email', 'LIKE', '%' . $pattern . '%')->
         orWhere('circunscripcion', 'LIKE', '%' . $pattern . '%')->
         orWhere('partido', 'LIKE', '%' . $pattern . '%')->

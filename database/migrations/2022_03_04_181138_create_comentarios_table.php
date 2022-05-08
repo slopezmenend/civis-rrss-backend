@@ -20,7 +20,7 @@ class CreateComentariosTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('comentarios')->onDelete('cascade');
             $table->string('titulo')->default('');
-            $table->string('text')->default('');
+            $table->text('text')->nullable();
             $table->string('image')->default('');
             $table->string('alt')->default('');
             $table->string('video')->default('');
