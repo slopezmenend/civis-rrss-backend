@@ -50,7 +50,7 @@ class UserController extends Controller
         //
         //return User::find($id);
         //dump ($id);
-        $usuario = User::find($id);
+        $usuario = User::where('id','=', $id)->with('follows')->first();
         //dump ($usuario);
 
         if ($usuario != null)

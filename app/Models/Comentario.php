@@ -9,7 +9,7 @@ class Comentario extends Model
 {
     use HasFactory;
     protected $table = 'comentarios';
-    protected $fillable = ['usuario_id', 'texto'];
+    protected $fillable = ['user_id', 'parent_id', 'titulo', 'texto', 'idcivis', 'tipo_civis'];
 
     /*public function diputado()
     {

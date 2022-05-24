@@ -105,6 +105,7 @@ class updateComments extends Command
         //Para cada uno crear un usuario referenciando a su id del congreso
         foreach ($votaciones as $votacion)
         {
+            $votos = [];
             $url2 = 'https://civis-api.herokuapp.com/api/votacion/votos/' . $votacion->id;
             $votos = $this->llamar_ws ($url2, $token);
 
@@ -114,15 +115,21 @@ class updateComments extends Command
 
             if (isset ($user_id->id))
             {
+                $commentario = Comentario::where ('idcivis','=', $voto->id)->where('tipo_civis', '=', 'voto')->first();
+                if ($commentario == null)
+                {
                 $user_id = $user_id->id;
             $comentario = new Comentario();
             $comentario->user_id = $user_id;
             $comentario->titulo = $votacion->titulo . ($votacion->sesion . '/' . $votacion->numeroVotacion);
             $comentario->text = $votacion->textoExpediente . "\nMi voto al respecto ha sido un \"" . $voto->voto . "\"";
             //$comentario->created_at = $intervencion->created_at;
+            $comentario->idcivis = $voto->id;
+            $comentario->tipo_civis = 'voto';
 
             $comentario->save();
             dump ("Creado voto: ", $voto->id);
+            } else dump ("Ya existía el voto como comentario ID ", $commentario->id);
             }
             else {
                 dump ("Error buscando el diputado ", $intervencion->diputado_id, $user_id);
@@ -155,17 +162,25 @@ class updateComments extends Command
 
             if (isset ($user_id->id))
             {
+                $commentario = Comentario::where ('idcivis','=', $intervencion->id)->where('tipo_civis', '=', 'intervencion')->first();
+                if ($commentario == null)
+                {
                 $user_id = $user_id->id;
             $comentario = new Comentario();
             $comentario->user_id = $user_id;
             $comentario->video = $intervencion->enlaceDescargaDirecta;
             $comentario->subs = $intervencion->enlaceSubtitles;
             $comentario->titulo = $intervencion->tipoIntervencion . $intervencion->organo;
-            $comentario->text = $intervencion->objeto . "\n<a href=\"" . $intervencion->EnlacePDF . "\">Enlace a la transcripción en PDF.";
+            $comentario->text = $intervencion->objeto;
+            $comentario->enlace = $intervencion->EnlacePDF;
+            $comentario->idcivis = $intervencion->id;
+            $comentario->tipo_civis = 'intervencion';
             //$comentario->created_at = $intervencion->created_at;
 
             $comentario->save();
             dump ("Creado comentario: ", $comentario->id);
+                }
+                else dump ("No creado comentario al existir ya con ID: ", $commentario->id);
             }
             else {
                 dump ("Error buscando el diputado ", $intervencion->diputado_id, $user_id);
@@ -181,7 +196,7 @@ class updateComments extends Command
     public function handle()
     {
         $this->crear_votaciones ();
-        //$this->crear_intervenciones ();
+        $this->crear_intervenciones ();
         return 0;
     }
 

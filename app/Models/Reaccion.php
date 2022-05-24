@@ -9,7 +9,7 @@ class Reaccion extends Model
 {
     use HasFactory;
     protected $table = 'reaciones';
-    protected $fillable = ['user_id', 'comentario_id', 'icon_id'];
+    protected $fillable = ['user_id', 'comentario_id', 'tipo'];
 
     public function usuario()
     {
@@ -19,11 +19,6 @@ class Reaccion extends Model
     public function commentario()
     {
         return $this->hasOne(Comentario::class, 'id', 'comentario_id');
-    }
-
-    public function icono()
-    {
-        return $this->hasOne(Icon::class, 'id', 'icon_id');
     }
 }
 ?>

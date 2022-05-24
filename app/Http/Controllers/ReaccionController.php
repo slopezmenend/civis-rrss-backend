@@ -14,6 +14,12 @@ class ReaccionController extends Controller
     public function index()
     {
         //
+        //
+        $reaccion = Reaccion::orderBy('id')->get();
+        if ($reaccion != null)
+            return response()->json(['data' => $reaccion]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
     }
 
     /**
@@ -80,5 +86,16 @@ class ReaccionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getReaccion ($id_comentario, $user_id)
+    {
+        $reaccion = Reaccion::where ('user_id','=', $user_id)->where('comentario_id');
+
+        //$reaccion = $request;
+        if ($reaccion != null)
+            return response()->json(['data' => $reaccion]);
+        else
+            return response()->json(['message' => 'Not Found!'], 404);
     }
 }

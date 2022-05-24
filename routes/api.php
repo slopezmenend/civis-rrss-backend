@@ -63,10 +63,29 @@ Route::get ('/getuser/{mail}', function ($mail)
 });
 
 //search usuario
-Route::get ('/searchuser/{pattern}', function ($pattern)
+Route::get ('/searchuser/{pattern}/{user_id}', function ($pattern, $user_id)
 {
-    return APIController::searchUser($pattern);
+    return APIController::searchUser($pattern, $user_id);
 });
+
+//get seguidos
+Route::get ('/seguidos/{user_id}', function ($user_id)
+{
+    return APIController::getSeguidos($user_id);
+});
+
+//get siguiendo
+Route::get ('/siguiendo/{user_id}', function ($user_id)
+{
+    return APIController::getSiguiendo($user_id);
+});
+
+//get usuario por email
+Route::get ('/get-user/{email}', function ($email)
+{
+    return APIController::getUserByEmail($email);
+});
+
 
 
 

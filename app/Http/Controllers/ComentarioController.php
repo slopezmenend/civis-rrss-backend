@@ -50,12 +50,37 @@ class ComentarioController extends Controller
         //    $comentario->update($request->all);
             //$comentario->save();
         //}*/
-        $comentario = Comentario::create ($request->all);
+
+        //return $request->input('user_id');
+        //$comentario = Comentario::create ($request->all);
+        //return $request;
+
+        $comentario = new Comentario();
 
         //$comentario = $request;
         if ($comentario != null)
+        {
+            $comentario->user_id = $request->user_id;
+            if ($request->parent_id != null & $request->parent_id != 0)
+            {
+                $comentario->parent_id = $request->parent_id;
+                $padre = Comentario::find($comentario->parent_id);
+                if ($padre != null)
+                {
+                    $padre->ncomentarios = $padre->ncomentarios + 1;
+                    $padre->save();
+                }
+            }
+
+            $titulo = '';
+            if (isset($request->titulo))
+                $titulo = $request->titulo;
+            $comentario->titulo = $titulo;
+            $comentario->text = $request->texto;
+            $comentario->save();
 
             return response()->json(['data' => $comentario]);
+        }
         else
             return response()->json(['message' => 'Not Found!'], 404);
     }

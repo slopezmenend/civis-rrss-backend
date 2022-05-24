@@ -21,6 +21,7 @@ class CreateComentariosTable extends Migration
             $table->foreign('parent_id')->references('id')->on('comentarios')->onDelete('cascade');
             $table->string('titulo')->default('');
             $table->text('text')->nullable();
+            $table->string('enlace')->default('');
             $table->string('image')->default('');
             $table->string('alt')->default('');
             $table->string('video')->default('');
@@ -31,6 +32,8 @@ class CreateComentariosTable extends Migration
             $table->bigInteger('disgusta')->default(0);
             $table->bigInteger('odia')->default(0);
             $table->bigInteger('ncomentarios')->default(0);
+            $table->bigInteger('idcivis')->default(0);
+            $table->string('tipo_civis')->default('');
             $table->timestamps();
         });
     }

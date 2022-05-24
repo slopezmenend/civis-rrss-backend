@@ -19,8 +19,7 @@ class CreateReaccionesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('comentario_id')->unsigned()->nullable();
             $table->foreign('comentario_id')->references('id')->on('comentarios')->onDelete('cascade');
-            $table->integer('icon_id')->unsigned()->nullable();
-            $table->foreign('icon_id')->references('id')->on('icons')->onDelete('cascade');
+            $table->string('tipo')->default('');
             $table->timestamps();
         });
     }
