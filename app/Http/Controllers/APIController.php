@@ -40,6 +40,33 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
+    public function updateNameFoto ($request)
+    {
+
+        $user = User::where('email', '=', $request->mail)->first();
+
+        if ($user != null)
+        {
+            if ($user->name == '' || $user->fotoperfil == '')
+            {
+                if ($user->name == '') $user->name = $request->name;
+                if ($user->fotoperfil == '') $user->fotoperfil = $request->foto;
+                $user->save();
+            }
+        }
+        else
+        {
+            $user = new User();
+            $user->email = $request->mail;
+            $user->name = $request->name;
+            $user->fotoperfil = $request->foto;
+            $user->password = '123456';
+            $user->save();
+        }
+
+        return response()->json(['data' => $user]);
+    }
+
     public function getUserByEmail ($mail)
     {
         //dump($mail);
@@ -48,7 +75,9 @@ class APIController extends Controller
         //dump ($user);
 
         if ($user != null)
+        {
             return response()->json(['data' => $user ]);
+        }
         else
             return response()->json(['message' => 'Not Found!'], 404);
     }

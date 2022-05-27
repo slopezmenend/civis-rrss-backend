@@ -86,6 +86,11 @@ Route::get ('/get-user/{email}', function ($email)
     return APIController::getUserByEmail($email);
 });
 
+Route::post ('/updateNameFoto/', function (Request $request)
+{
+    return APIController::updateNameFoto($request);
+});
+
 
 
 
