@@ -97,8 +97,16 @@ class updateUsers extends Command
         //dump ("Diputados cargados: " , $diputados);
 
         $url2 = 'https://civis-api.herokuapp.com/api/partidos';
-        $partidos = $this->llamar_ws ($url, $token);
+        $partidos = $this->llamar_ws ($url2, $token);
         //dump ("Partidos cargados: " , $partidos);
+
+        $url3 = 'https://civis-api.herokuapp.com/api/grupos';
+        $grupos = $this->llamar_ws ($url3, $token);
+        //dump ("Grupos cargados: " , $grupos);
+
+        $url4 = 'https://civis-api.herokuapp.com/api/circunscripciones';
+        $circunscripciones = $this->llamar_ws ($url4, $token);
+        //dump ("Circunscripciones cargadas: " , $circunscripciones);
 
         //Para cada uno crear un usuario referenciando a su id del congreso
         foreach ($diputados as $diputado)
@@ -115,18 +123,46 @@ class updateUsers extends Command
                 $user->nombre = $diputado->nombrecompleto;
                 $user->email = $diputado->email;
                 $user->password = '123456';
+
+                foreach ($partidos as $partido)
+                    if ($partido->id == $diputado->partido_id)
+                    {
+                        dump ($partido);
+                        $user->partido = $partido->nombre;
+                    }
+
+                foreach ($grupos as $grupo)
+                if ($grupo->id == $diputado->grupo_id)
+                {
+                    dump ($grupo);
+                    $user->grupo = $grupo->nombre;
+                }
+
+                foreach ($circunscripciones as $circunscripcion)
+                if ($circunscripcion->id == $diputado->circunscripcion_id)
+                {
+                    dump ($circunscripcion);
+                    $user->circunscripcion = $circunscripcion->nombre;
+                }
+
                 $user->idcivis = $diputado->id;
                 $diputado->urlfoto == null? $user->fotoperfil = '': $user->fotoperfil = $diputado->urlfoto;
                 //$user->fotoperfil = $diputado->urlfoto;
                 //$user->urlfondo = $partidos.find(id , $diputado->partido_id)->url;
                 $user->biografia = $diputado->biografia;
                 $diputado->urlperfil == null? $user->web = '': $user->web = $diputado->urlperfil;
+                $diputado->facebook == null? $user->facebook = '': $user->facebook = $diputado->facebook;
+                $diputado->twitter == null? $user->twitter = '': $user->twitter = $diputado->twitter;
+                $diputado->instagram == null? $user->instagram = '': $user->instagram = $diputado->instagram;
+                $diputado->youtube == null? $user->youtube = '': $user->youtube = $diputado->youtube;
+
+
                 //$user->web = $diputado->urlperfil;
                 $user->save();
-                dump ("Creado usuario: ", $user->id, $user->name);
+                //dump ("Creado usuario: ", $user->id, $user->name);
             }
             else {
-                dump ("Ya existía el usuario: ", $user->name);
+                //dump ("Ya existía el usuario: ", $user->name);
             }
 
             //Inicializamos su muro
