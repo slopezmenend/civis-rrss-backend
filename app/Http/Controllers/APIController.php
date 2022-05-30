@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 
 class APIController extends Controller
 {
-    /*public function inicializar ()
+    /*public static function inicializar ()
     {
         InicializarJob::dispatch();
         return response()->json(['message' => 'Proceso de inicializado lanzado correctamente'], 200);
     }*/
 
-    public function getMuro($id)
+    public static function getMuro($id)
     {
         //
         $comentario = Comentario::where('user_id', '=', $id)->with('diputado')->where('parent_id','=', NULL)->orderBy('id', 'desc')->paginate(15);
@@ -28,7 +28,7 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
-    public function getTimeline($id)
+    public static function getTimeline($id)
     {
         //
         $comentario = DB::table('comentarios')
@@ -40,7 +40,7 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
-    public function updateNameFoto ($request)
+    public static function updateNameFoto ($request)
     {
 
         $user = User::where('email', '=', $request->mail)->first();
@@ -69,7 +69,7 @@ class APIController extends Controller
         return response()->json(['data' => $user]);
     }
 
-    public function getUserByEmail ($mail)
+    public static function getUserByEmail ($mail)
     {
         //dump($mail);
         $user = User::where('email', '=', $mail)->first();
@@ -84,7 +84,7 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
-    public function searchUser ($pattern, $user_id)
+    public static function searchUser ($pattern, $user_id)
     {
         //dump($mail);
         $user = User::
@@ -106,7 +106,7 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
-    public function getSeguidos ($user_id)
+    public static function getSeguidos ($user_id)
     {
         //dump($mail);
         $follows = Follow::where('seguidor_id','=', $user_id)->with('seguido')->get();
@@ -127,7 +127,7 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
-    public function getSiguiendo ($user_id)
+    public static function getSiguiendo ($user_id)
     {
         //dump($mail);
         $follows = Follow::where('seguido_id','=', $user_id)->with('seguidor')->get();
@@ -148,7 +148,7 @@ class APIController extends Controller
             return response()->json(['message' => 'Not Found!'], 404);
     }
 
-    public function crearReaccion ($request)
+    public static function crearReaccion ($request)
     {
 
         $reaccion = new Reaccion();
@@ -160,7 +160,7 @@ class APIController extends Controller
         return response()->json(['data' => $user]);
     }
 
-    public function borrarReaccion ($request)
+    public static function borrarReaccion ($request)
     {
 
         $id = $request->id;
