@@ -11,10 +11,10 @@ class Comentario extends Model
     protected $table = 'comentarios';
     protected $fillable = ['user_id', 'parent_id', 'titulo', 'texto', 'idcivis', 'tipo_civis'];
 
-    /*public function diputado()
+    public function diputado()
     {
-        return $this->hasMany(Diputado::class);
-    }*/
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 
 }
 ?>

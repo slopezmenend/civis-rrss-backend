@@ -44,6 +44,7 @@ class User extends Authenticatable
 
     public function follows()
     {
-        return $this->belongsTo(Follow::class, 'id', 'seguido_id');
+        //return $this->belongsTo(Follow::class, 'id', 'seguido_id');
+        return $this->hasMany(Follow::class,'seguido_id');
     }
 }

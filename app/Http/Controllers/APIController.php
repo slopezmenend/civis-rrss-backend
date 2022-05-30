@@ -21,7 +21,7 @@ class APIController extends Controller
     public function getMuro($id)
     {
         //
-        $comentario = Comentario::where('user_id', '=', $id)->where('parent_id','=', NULL)->orderBy('id', 'desc')->paginate(15);
+        $comentario = Comentario::where('user_id', '=', $id)->with('diputado')->where('parent_id','=', NULL)->orderBy('id', 'desc')->paginate(15);
         if ($comentario != null)
             return response()->json(['data' => $comentario]);
         else
@@ -47,9 +47,10 @@ class APIController extends Controller
 
         if ($user != null)
         {
-            if ($user->name == '' || $user->fotoperfil == '')
+            if ($user->name == '' || $user->nombre == '' || $user->fotoperfil == '')
             {
-                if ($user->name == '') $user->name = $request->name;
+                if ($user->name == '')  $user->name = $request->name;
+                if ($user->nombre == '')  $user->nombre = $request->name;
                 if ($user->fotoperfil == '') $user->fotoperfil = $request->foto;
                 $user->save();
             }
@@ -59,6 +60,7 @@ class APIController extends Controller
             $user = new User();
             $user->email = $request->mail;
             $user->name = $request->name;
+            $user->nombre = $request->name;
             $user->fotoperfil = $request->foto;
             $user->password = '123456';
             $user->save();
@@ -144,6 +146,35 @@ class APIController extends Controller
         }
         else
             return response()->json(['message' => 'Not Found!'], 404);
+    }
+
+    public function crearReaccion ($request)
+    {
+
+        $reaccion = new Reaccion();
+        $reaccion->user_id = $request->user_id;
+        $reaccion->comentario_id = $request->id;
+        $reaccion->tipo = $request->valor;
+        $reaccion->save();
+
+        return response()->json(['data' => $user]);
+    }
+
+    public function borrarReaccion ($request)
+    {
+
+        $id = $request->id;
+        $user_id  = $request->user_id;
+
+        $reaccion = Reaccion::where ('user_id','=',$user_id)->where ('comentario_id','=',$id)->first();
+
+        if ($reaccion!=null)
+        {
+            $reaccion->delete();
+            return response()->json(['data' => $reaccion]);
+        }
+        else
+            return response()->json(['message' => 'Not found']);
     }
 
 }

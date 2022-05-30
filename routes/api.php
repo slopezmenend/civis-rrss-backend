@@ -91,6 +91,16 @@ Route::post ('/updateNameFoto/', function (Request $request)
     return APIController::updateNameFoto($request);
 });
 
+Route::post ('/crearReaccion/', function (Request $request)
+{
+    return APIController::crearReaccion($request);
+});
+
+Route::post ('/borrarReaccion/', function (Request $request)
+{
+    return APIController::borrarReaccion($request);
+});
+
 
 
 

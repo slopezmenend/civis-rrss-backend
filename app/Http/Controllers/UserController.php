@@ -93,7 +93,7 @@ class UserController extends Controller
         if ($user != null)
         {
             $user->name = updatedValue($user->name, $request->name);
-            $user->name = updatedValue($user->name, $request->name);
+            $user->nombre = updatedValue($user->nombre, $request->nombre);
             $user->email = updatedValue($user->email, $request->email);
             $user->fotoperfil = updatedValue($user->fotoperfil, $request->fotoperfil);
             $user->idcivis = updatedValue($user->idcivis, $request->idcivis);
