@@ -123,7 +123,7 @@ class updateComments extends Command
             $comentario->user_id = $user_id;
             $comentario->titulo = $votacion->titulo . ($votacion->sesion . '/' . $votacion->numeroVotacion);
             $comentario->text = $votacion->textoExpediente . "\nMi voto al respecto ha sido un \"" . $voto->voto . "\"";
-            //$comentario->created_at = $intervencion->created_at;
+            $comentario->created_at = $votacion->created_at;
             $comentario->idcivis = $voto->id;
             $comentario->tipo_civis = 'voto';
 
@@ -175,7 +175,7 @@ class updateComments extends Command
             $comentario->enlace = $intervencion->EnlacePDF;
             $comentario->idcivis = $intervencion->id;
             $comentario->tipo_civis = 'intervencion';
-            //$comentario->created_at = $intervencion->created_at;
+            $comentario->created_at = $intervencion->created_at;
 
             $comentario->save();
             dump ("Creado comentario: ", $comentario->id);

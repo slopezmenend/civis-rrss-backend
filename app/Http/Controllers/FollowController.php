@@ -136,9 +136,10 @@ class FollowController extends Controller
             $seguidor->followers = $seguido->followers - 1;
             $seguidor->save();
 
-            return $seguidor;
+            return response()->json(['data' => $seguidor]);
         }
-        return "Relation not found";
+        else
+            return response()->json(['message' => 'Relation not found!'], 404);
     }
 
 }

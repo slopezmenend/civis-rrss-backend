@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reaccion extends Model
 {
     use HasFactory;
-    protected $table = 'reaciones';
+    protected $table = 'reacciones';
     protected $fillable = ['user_id', 'comentario_id', 'tipo'];
 
     public function usuario()
