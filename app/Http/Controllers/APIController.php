@@ -177,7 +177,7 @@ class APIController extends Controller
 
     public static function searchUser ($pattern, $user_id)
     {
-        //dump($mail);
+        dump($pattern, $user_id);
         $users = User::
         //leftJoin ('follows', 'users.id', '=', 'follows.seguido_id')->
         where('nombre', 'LIKE', '%' . $pattern . '%')->
@@ -189,7 +189,7 @@ class APIController extends Controller
         //with('follows')->
         //paginate(15);
         //dd($user);
-        //dump ($user);
+        dump ($users);
 
 /*        if ($user != null)
             return response()->json(['data' => $user ]);
@@ -205,6 +205,7 @@ class APIController extends Controller
                     $temp->follow = $follow!=null;
                     array_push ($result, $temp);
                 }
+                dump ($result);
                 return response()->json(['data' => $result]);
             }
             else
