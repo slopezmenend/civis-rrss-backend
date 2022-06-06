@@ -193,7 +193,7 @@ class APIController extends Controller
         //paginate(15);
         //dd($user);
         //dump ($users);
-        error_log($users);
+        //error_log($users);
 
 /*        if ($user != null)
             return response()->json(['data' => $user ]);
@@ -210,7 +210,7 @@ class APIController extends Controller
                     array_push ($result, $temp);
                 }
                 //dump ($result);
-                error_log($result);
+                error_log("Vamos a contestar con ", count($result));
                 return response()->json(['data' => $result]);
             }
             else
