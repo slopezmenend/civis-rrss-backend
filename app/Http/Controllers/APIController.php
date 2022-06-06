@@ -88,38 +88,42 @@ class APIController extends Controller
 
     public static function getTimeline($id, $uid)
     {
+        //dump ('llamada al timeline con datos:', $id, $uid);
         if ($uid != 0)
         {
         //
-        $comentarios = DB::table('comentarios')
-        ->join('follows', 'comentarios.user_id', '=', 'follows.seguido_id')->join('users', 'comentarios.user_id','=','users.id')->where ('follows.seguidor_id', '=', $id)
-        ->select('comentarios.*', 'users.*', 'comentarios.id as id')->paginate(15);
+            $comentarios = DB::table('comentarios')
+            ->join('follows', 'comentarios.user_id', '=', 'follows.seguido_id')->join('users', 'comentarios.user_id','=','users.id')->where ('follows.seguidor_id', '=', $id)
+            ->select('comentarios.*', 'users.*', 'comentarios.id as id')->paginate(15);
 
-        //dd($comentarios);
-        if ($comentarios != null)
-        {
-            $result = [];
-            foreach ($comentarios->items() as $comentario)
+            //dump('Recuperamos comentarios:', $comentarios);
+            if ($comentarios != null)
             {
-                $com = Comentario::find($comentario->id);
-                $diputado = User::find($comentario->user_id);
-                //dump ($diputado);
-                $reaccion = Reaccion::where('comentario_id','=',$comentario->id)->where ('user_id','=',$uid)->first();
-                //dump ($reaccion);
-                $com->diputado = $diputado;
-                if ($reaccion!=null)
-                    $com->reaccion = $reaccion->tipo;
-                else
-                    $com->reaccion = 0;
-                //dump ($com);
-                array_push ($result, $com);
+                $result = [];
+                foreach ($comentarios->items() as $comentario)
+                {
+                    $com = Comentario::find($comentario->id);
+                    $diputado = User::find($comentario->user_id);
+                    //dump ($diputado);
+                    $reaccion = Reaccion::where('comentario_id','=',$comentario->id)->where ('user_id','=',$uid)->first();
+                    //dump ($reaccion);
+                    $com->diputado = $diputado;
+                    if ($reaccion!=null)
+                        $com->reaccion = $reaccion->tipo;
+                    else
+                        $com->reaccion = 0;
+                    //dump ($com);
+                    array_push ($result, $com);
+                }
+                return response()->json(['data' => $result]);
             }
-            return response()->json(['data' => $result]);
+            else
+            {
+                //dump ("No se encontró comentario");
+                return response()->json(['message' => 'Not Found!'], 404);
+            }
         }
-        else
-            return response()->json(['message' => 'Not Found!'], 404);
-        }
-        else return response()->json(['data' => []]);
+        else { return response()->json(['data' => []]); }
 
         /*if ($comentario != null)
             return response()->json(['data' => $comentario]);
