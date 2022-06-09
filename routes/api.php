@@ -25,7 +25,7 @@ use App\Http\Controllers\UserController;
     return $request->user();
 });*/
 
-//Route::group(['middleware' => ['cors']], function () {
+Route::group(['middleware' => ['cors']], function () {
     // public routes
 
 /** Resources */
@@ -140,6 +140,6 @@ Route::post ('/borrarReaccion/', function (Request $request)
     return APIController::borrarReaccion($request);
 });
 
-//});
+});
 
 
