@@ -15,6 +15,8 @@ class TrustHosts extends Middleware
     {
         return [
             $this->allSubdomainsOfApplicationUrl(),
+            'https://dancing-tiramisu-f41aab.netlify.app/',
+            'http://localhost:4200/'
         ];
     }
 }
