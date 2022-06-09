@@ -25,6 +25,9 @@ use App\Http\Controllers\UserController;
     return $request->user();
 });*/
 
+Route::group(['middleware' => ['cors']], function () {
+    // public routes
+
 /** Resources */
 Route::resource('comentario', ComentarioController::class);
 Route::resource('follow', FollowController::class);
@@ -137,6 +140,6 @@ Route::post ('/borrarReaccion/', function (Request $request)
     return APIController::borrarReaccion($request);
 });
 
-
+});
 
 
