@@ -21,12 +21,14 @@ use App\Http\Controllers\UserController;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});*/
+});
 
 Route::group(['middleware' => ['cors']], function () {
     // public routes
+    Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
+});
 
 /** Resources */
 Route::resource('comentario', ComentarioController::class);
@@ -140,6 +142,6 @@ Route::post ('/borrarReaccion/', function (Request $request)
     return APIController::borrarReaccion($request);
 });
 
-});
+//});
 
 
