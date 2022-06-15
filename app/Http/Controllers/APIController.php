@@ -42,7 +42,7 @@ class APIController extends Controller
         {
             $comentarios = Comentario::where('user_id', '=', $id)
             ->with('diputado')->where('parent_id','=', NULL)
-            ->orderBy('id', 'desc')->paginate(15);
+            ->orderBy('id', 'desc')->paginate(50);
 
             if ($comentarios != null)
             {
@@ -76,8 +76,8 @@ class APIController extends Controller
         ->where ('comentarios.user_id', '=', $id)
         ->where('reacciones.user_id', '=', $uid)
         ->orWhere('reacciones.user_id', '=', null)
-        ->select('comentarios.*', 'users.*', 'reacciones.*', 'comentarios.id as id')->orderBy('comentarios.id', 'desc')->paginate(15);
-        //$comentario = Comentario::where('user_id', '=', $id)->with('diputado')->where('parent_id','=', NULL)->orderBy('id', 'desc')->paginate(15);*/
+        ->select('comentarios.*', 'users.*', 'reacciones.*', 'comentarios.id as id')->orderBy('comentarios.id', 'desc')->paginate(50);
+        //$comentario = Comentario::where('user_id', '=', $id)->with('diputado')->where('parent_id','=', NULL)->orderBy('id', 'desc')->paginate(50);*/
         /*if ($comentarios != null)
         {
             return response()->json(['data' => $comentarios]);
@@ -94,7 +94,7 @@ class APIController extends Controller
         //
             $comentarios = DB::table('comentarios')
             ->join('follows', 'comentarios.user_id', '=', 'follows.seguido_id')->join('users', 'comentarios.user_id','=','users.id')->where ('follows.seguidor_id', '=', $id)
-            ->select('comentarios.*', 'users.*', 'comentarios.id as id')->paginate(15);
+            ->select('comentarios.*', 'users.*', 'comentarios.id as id')->orderBy('id', 'desc')->paginate(50);
 
             //dump('Recuperamos comentarios:', $comentarios);
             if ($comentarios != null)
@@ -190,7 +190,7 @@ class APIController extends Controller
         orWhere('partido', 'LIKE', '%' . $pattern . '%')->
         orWhere('biografia', 'LIKE', '%' . $pattern . '%')->get();
         //with('follows')->
-        //paginate(15);
+        //paginate(50);
         //dd($user);
         //dump ($users);
         //error_log($users);
@@ -358,7 +358,7 @@ class APIController extends Controller
         if ($uid != 0)
         {
             $comentarios = Comentario::where('parent_id','=', $comentario_id)
-            ->with('diputado')->orderBy('id', 'desc')->paginate(15);
+            ->with('diputado')->orderBy('id', 'desc')->paginate(50);
 
             if ($comentarios != null)
             {

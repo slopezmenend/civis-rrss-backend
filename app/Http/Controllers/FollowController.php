@@ -93,7 +93,7 @@ class FollowController extends Controller
             $follow->delete();
     }
 
-    public function createFollow ($seguido_id, $seguidor_id)
+    public static function createFollow ($seguido_id, $seguidor_id)
     {
         $follow = Follow::where ('seguido_id', '=', $seguido_id)->where('seguidor_id', '=', $seguidor_id)->first();
         if ($follow == null)
@@ -120,7 +120,7 @@ class FollowController extends Controller
 
     }
 
-    public function deleteFollow ($seguido_id, $seguidor_id)
+    public static function deleteFollow ($seguido_id, $seguidor_id)
     {
         $follow = Follow::where('seguido_id', '=', $seguido_id)->where('seguidor_id', '=', $seguidor_id)->first();
 
