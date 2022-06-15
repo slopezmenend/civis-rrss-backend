@@ -132,9 +132,9 @@ class FollowController extends Controller
             $seguidor->following = $seguidor->following - 1;
             $seguidor->save();
 
-            $seguidor = User::find($seguido_id);
-            $seguidor->followers = $seguido->followers - 1;
-            $seguidor->save();
+            $seguido = User::find($seguido_id);
+            $seguido->followers = $seguido->followers - 1;
+            $seguido->save();
 
             return response()->json(['data' => $seguidor]);
         }
