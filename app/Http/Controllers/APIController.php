@@ -94,7 +94,7 @@ class APIController extends Controller
         //
             $comentarios = DB::table('comentarios')
             ->join('follows', 'comentarios.user_id', '=', 'follows.seguido_id')->join('users', 'comentarios.user_id','=','users.id')->where ('follows.seguidor_id', '=', $id)
-            ->select('comentarios.*', 'users.*', 'comentarios.id as id')->orderBy('id', 'desc')->paginate(50);
+            ->select('comentarios.*', 'users.*', 'comentarios.id as id')->orderBy('comentarios.id', 'desc')->paginate(50);
 
             //dump('Recuperamos comentarios:', $comentarios);
             if ($comentarios != null)
