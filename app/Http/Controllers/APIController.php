@@ -89,8 +89,8 @@ class APIController extends Controller
     public static function getTimeline($id, $uid)
     {
         //dump ('llamada al timeline con datos:', $id, $uid);
-        if ($uid != 0)
-        {
+        //if ($uid != 0)
+        //{
         //
             $comentarios = DB::table('comentarios')
             ->join('follows', 'comentarios.user_id', '=', 'follows.seguido_id')->join('users', 'comentarios.user_id','=','users.id')->where ('follows.seguidor_id', '=', $id)
@@ -122,8 +122,8 @@ class APIController extends Controller
                 //dump ("No se encontró comentario");
                 return response()->json(['message' => 'Not Found!'], 404);
             }
-        }
-        else { return response()->json(['data' => []]); }
+        //}
+        //else { return response()->json(['data' => []]); }
 
         /*if ($comentario != null)
             return response()->json(['data' => $comentario]);
